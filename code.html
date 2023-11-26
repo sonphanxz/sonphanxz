@@ -1,10 +1,215 @@
-- 👋 Hi, I’m @sonphanxz
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+        body {
+            background: linear-gradient(45deg, #180c3d, #2c3e50);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-<!---
-sonphanxz/sonphanxz is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+        #passwordForm {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        #passwordInput {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        #submitButton {
+            background-color: #ff6666;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #submitButton:hover {
+            background-color: #ff4d4d;
+        }
+
+        #notification {
+            display: none;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .heart {
+            background-color: #ff6666;
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            margin: 0 10px;
+            position: relative;
+            top: 0;
+            transform: rotate(-45deg);
+            position: absolute;
+            left: 45%;
+            top: 45%;
+            filter: drop-shadow(0 0 5px rgba(255, 102, 102, 0.8));
+            animation: heartbeat 0.5s infinite alternate;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            background-color: #ff6666;
+            border-radius: 50%;
+            height: 10px;
+            width: 10px;
+            position: absolute;
+        }
+
+        .heart:before {
+            top: -5px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 5px;
+            top: 0;
+        }
+
+        .text {
+            position: absolute;
+            color: #fff;
+            font-size: 10px;
+            font-family: 'Parisienne', cursive;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes heartbeat {
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes move {
+            to {
+                transform: scale(2);
+            }
+        }
+    </style>
+    <script>
+        function checkPassword() {
+            var password = document.getElementById('passwordInput').value;
+            var notification = document.getElementById('notification');
+
+            if (password === '1314') {
+                document.getElementById('passwordForm').style.display = 'none';
+                document.getElementById('heartContainer').style.display = 'flex';
+                startHeartAnimation();
+            } else {
+                notification.textContent = 'Sai mật khẩu ròi... Lêu lêu ><';
+                notification.style.display = 'block';
+            }
+        }
+
+        function startHeartAnimation() {
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = `${window.innerWidth / 2}px`;
+                heart.style.top = `${window.innerHeight / 2}px`;
+                const animationDuration = `${Math.random()*2 + 2}s`;
+                heart.style.animation = `move ${animationDuration} linear, heartbeat 0.5s infinite alternate`;
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 2000;
+                const targetX = window.innerWidth / 2 + distance * Math.cos(angle);
+                const targetY = window.innerHeight / 2 + distance * Math.sin(angle);
+                const keyframes = [
+                    { transform: 'translate(0, 0) rotate(45deg) scale(1)' },
+                    { transform: `translate(${targetX - window.innerWidth / 2}px, ${targetY - window.innerHeight / 2}px) rotate(405deg) scale(2)` }
+                ];
+                const animation = heart.animate(keyframes, {
+                    duration: parseFloat(animationDuration) * 1000,
+                    easing: 'linear',
+                    fill: 'forwards'
+                });
+                document.body.appendChild(heart);
+                animation.onfinish = () => {
+                    heart.remove();
+                };
+            }
+
+            function createText() {
+                const text = document.createElement('div');
+                text.className = 'text';
+                text.textContent = 'I love you';
+                text.style.left = `${window.innerWidth / 2}px`;
+                text.style.top = `${window.innerHeight / 2}px`;
+                const animationDuration = `${Math.random() * 2 + 2}s`;
+                text.style.animation = `move ${animationDuration} linear, heartbeat 0.5s infinite alternate`;
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 2000;
+                const targetX = window.innerWidth / 2 + distance * Math.cos(angle);
+                const targetY = window.innerHeight / 2 + distance * Math.sin(angle);
+                const keyframes = [
+                    { transform: 'translate(0, 0) scale(1)' },
+                    { transform: `translate(${targetX - window.innerWidth / 2}px, ${targetY - window.innerHeight / 2}px) scale(2)` }
+                ];
+                const animation = text.animate(keyframes, {
+                    duration: parseFloat(animationDuration) * 1000,
+                    easing: 'linear',
+                    fill: 'forwards'
+                });
+                document.body.appendChild(text);
+                animation.onfinish = () => {
+                    text.remove();
+                };
+            }
+
+            setInterval(createHeart, 50);
+            setInterval(createText, 100);
+        }
+    </script>
+</head>
+<body>
+    <div id="passwordForm">
+        <input type="password" id="passwordInput" placeholder="Nhập mật khẩu">
+        <button id="submitButton" onclick="checkPassword()">Gửi</button>
+        <div id="notification"></div>
+    </div>
+
+    <div id="heartContainer">
+    </div>
+</body>
+</html>
